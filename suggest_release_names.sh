@@ -15,13 +15,16 @@ then
 fi
 
 PREVIOUS=`curl 'https://api.github.com/repos/robfletcher/strikt/releases?per_page=1000' -H "Authorization: token $GITHUB_TOKEN" -s | jq '.[] | .name' | tr -d "\"" | sort`
-NAMES=`curl 'http://www.voidstate.com/name_generator/index.php?action=display_results' -s --data 'action=display_results&dd1%5B%5D=All_Adjective&dd1%5B%5D=All_Noun&numberToDisplay=10' | pup 'table td strong text{}' | sort`
-while read name
+
+for i in {1..10}
 do
-  if grep -q "$name" <<< "$PREVIOUS"
+  ADJECTIVE=`curl https://randomword.com/adjective -s | pup '#random_word text{}'`
+  NOUN=`curl https://randomword.com/noun -s | pup '#random_word text{}'`
+  NAME="$ADJECTIVE $NOUN"
+  if grep -q "$NAME" <<< "$PREVIOUS"
   then
-    echo "~~ $name ~~ (ALREADY USED)"
+    echo "~~ $NAME ~~ (ALREADY USED)"
   else
-    echo "$name"
+    echo "$NAME"
   fi
-done <<< "$NAMES"
+done

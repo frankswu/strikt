@@ -8,12 +8,13 @@ import org.jmailen.gradle.kotlinter.KotlinterExtension
 
 plugins {
   kotlin("jvm") version "1.4.0" apply false
+  id("org.jetbrains.dokka") version "1.4.0"
   id("nebula.release") version "15.0.1"
   id("org.jmailen.kotlinter") version "3.0.2" apply false
   id("info.solidsoft.pitest") version "1.5.0" apply false
-  id("com.github.ben-manes.versions") version "0.29.0"
+  id("com.github.ben-manes.versions") version "0.31.0"
   id("com.adarshr.test-logger") version "2.1.0" apply false
-  id("com.autonomousapps.dependency-analysis") version "0.57.0"
+  id("com.autonomousapps.dependency-analysis") version "0.58.0"
 }
 
 buildscript {
@@ -21,6 +22,10 @@ buildscript {
   dependencies {
     "pitest"("org.pitest:pitest-junit5-plugin:0.12")
   }
+}
+
+repositories {
+  jcenter()
 }
 
 allprojects {
